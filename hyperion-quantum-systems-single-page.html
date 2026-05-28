@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperion Quantum Systems - Deep Quantum Computing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066ff;
+            --primary-foreground: #ffffff;
+            --background: #000000;
+            --foreground: #f5f5f5;
+            --card: #1a1a1a;
+            --card-foreground: #f5f5f5;
+            --border: #333333;
+            --muted: #a0a0a0;
+            --radius: 6px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            max-width: 1280px;
+        }
+
+        @media (min-width: 640px) {
+            .container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: var(--background);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--foreground);
+            font-weight: bold;
+            font-size: 1.125rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        .nav-links a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: color 150ms ease-out;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-cta {
+                display: block;
+            }
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 150ms ease-out;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: #0052cc;
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            color: #a0a0a0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 150ms ease-out;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .menu-toggle {
+                display: none;
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 1rem;
+        }
+
+        .hero {
+            padding-top: 8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.3;
+            background: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663035914165/SF9cBDzx7prokyFUMyyc3q/quantum-hero-2K3H5qCyG72TbrbU5eMVKJ.webp');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.7), rgba(0,0,0,1));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 42rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(0, 102, 255, 0.2);
+            border: 1px solid rgba(0, 102, 255, 0.5);
+            border-radius: var(--radius);
+            color: #60a5fa;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+        }
+
+        h1 .highlight {
+            color: var(--primary);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            color: #a0a0a0;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 28rem;
+            margin-bottom: 2rem;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 640px) {
+            .button-group {
+                flex-direction: row;
+            }
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .metric {
+            text-align: left;
+        }
+
+        .metric-value {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: #a0a0a0;
+        }
+
+        /* Features Section */
+        .features {
+            background: linear-gradient(to bottom, var(--background), #0a0a0a);
+        }
+
+        .section-title {
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            margin-bottom: 1rem;
+        }
+
+        .title-underline {
+            width: 3rem;
+            height: 4px;
+            background-color: var(--primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: all 200ms ease-out;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0, 102, 255, 0.5);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(0, 102, 255, 0.2);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card:hover .feature-icon {
+            background-color: rgba(0, 102, 255, 0.3);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+        }
+
+        /* Technology Section */
+        .technology {
+            background: linear-gradient(to bottom, #0a0a0a, var(--background));
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .tech-grid {
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
+            }
+        }
+
+        .tech-list {
+            list-style: none;
+        }
+
+        .tech-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: #a0a0a0;
+        }
+
+        .tech-list li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .tech-specs {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .spec-item {
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #60a5fa;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-value {
+            font-size: 1.875rem;
+            font-weight: bold;
+        }
+
+        /* Roadmap Section */
+        .roadmap {
+            background: linear-gradient(to bottom, var(--background), #0a0a0a);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1.5rem;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--primary), #333333);
+        }
+
+        @media (min-width: 768px) {
+            .timeline::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            margin-left: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-item {
+                margin-left: 0;
+                padding-right: 50%;
+                text-align: right;
+            }
+
+            .timeline-item:nth-child(even) {
+                padding-right: 0;
+                padding-left: 50%;
+                text-align: left;
+            }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -3.5rem;
+            top: 0;
+            width: 48px;
+            height: 48px;
+            background-color: var(--background);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        @media (min-width: 768px) {
+            .timeline-dot {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .timeline-content {
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 200ms ease-out;
+        }
+
+        .timeline-content:hover {
+            border-color: rgba(0, 102, 255, 0.5);
+        }
+
+        .timeline-phase {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            font-size: 0.875rem;
+        }
+
+        .timeline-content li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #a0a0a0;
+        }
+
+        .timeline-content li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            margin-top: 0.35rem;
+            flex-shrink: 0;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(to bottom, #0a0a0a, var(--background));
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            padding: 2rem;
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(0, 102, 255, 0.2);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            font-size: 0.875rem;
+        }
+
+        .contact-card a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--foreground);
+            font-family: inherit;
+            transition: border-color 150ms ease-out;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: none;
+            min-height: 150px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 150ms ease-out;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            color: #666666;
+            font-size: 0.875rem;
+        }
+
+        /* CTA Sections */
+        .cta-section {
+            background: linear-gradient(to right, rgba(0, 102, 255, 0.1), transparent);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.125rem;
+            max-width: 32rem;
+            margin: 0 auto 2rem;
+        }
+
+        /* Utility */
+        .max-w-5xl {
+            max-width: 64rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-content">
+                <a href="#home" class="logo">
+                    <div class="logo-icon"></div>
+                    <span>Hyperion</span>
+                </a>
+                <div class="nav-links">
+                    <a onclick="scrollToSection('home')">Home</a>
+                    <a onclick="scrollToSection('technology')">Technology</a>
+                    <a onclick="scrollToSection('roadmap')">Roadmap</a>
+                    <a onclick="scrollToSection('contact')">Contact</a>
+                </div>
+                <div class="nav-cta">
+                    <a href="#contact" class="btn-primary">Get Started</a>
+                </div>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container max-w-5xl">
+            <div class="hero-content fade-in">
+                <div class="badge">QUANTUM COMPUTING</div>
+                <h1>Unlocking the Power of <span class="highlight">Quantum</span></h1>
+                <p>Hyperion Quantum Systems is pioneering the deep quantum domain, delivering breakthrough quantum computing solutions that solve humanity's most complex challenges.</p>
+                <div class="button-group">
+                    <a href="#contact" class="btn-primary">Get Started →</a>
+                    <a href="#technology" class="btn-secondary">Learn More</a>
+                </div>
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value">100+</div>
+                        <div class="metric-label">Quantum Qubits</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">99.9%</div>
+                        <div class="metric-label">Gate Fidelity</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">24/7</div>
+                        <div class="metric-label">Cloud Access</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container max-w-5xl">
+            <div class="section-title">
+                <h2>Core Capabilities</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Advanced Quantum Architecture</h3>
+                    <p>State-of-the-art quantum processors with unprecedented qubit counts and error correction capabilities.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Cloud-First Platform</h3>
+                    <p>Access quantum computing power from anywhere. Deploy algorithms instantly without infrastructure overhead.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📊</div>
+                    <h3>Enterprise-Grade Performance</h3>
+                    <p>Optimized for production workloads with 99.9% uptime SLA and dedicated support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section 1 -->
+    <section class="cta-section">
+        <div class="container max-w-5xl mx-auto">
+            <h2>Ready to Explore Quantum?</h2>
+            <p>Join leading enterprises leveraging quantum computing to solve complex optimization, simulation, and machine learning problems.</p>
+            <a href="#contact" class="btn-primary">Start Your Journey →</a>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="technology">
+        <div class="container max-w-5xl">
+            <div class="section-title">
+                <h2>Quantum Systems Architecture</h2>
+                <div class="title-underline"></div>
+            </div>
+
+            <div class="tech-grid">
+                <div>
+                    <h3>Superconducting Qubits</h3>
+                    <p>Our quantum processors utilize advanced superconducting qubit technology, achieving unprecedented coherence times and gate fidelities. Each qubit is precisely engineered and calibrated for optimal performance.</p>
+                    <ul class="tech-list">
+                        <li>100+ qubits per processor</li>
+                        <li>99.9% two-qubit gate fidelity</li>
+                        <li>Microsecond-scale coherence times</li>
+                        <li>Active error correction</li>
+                    </ul>
+                </div>
+                <div class="tech-specs">
+                    <div class="spec-item">
+                        <div class="spec-label">Qubit Count</div>
+                        <p class="spec-value">100+</p>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Gate Fidelity</div>
+                        <p class="spec-value">99.9%</p>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Coherence Time</div>
+                        <p class="spec-value">&gt;100µs</p>
+                    </div>
+                    <div class="spec-item">
+                        <div class="spec-label">Uptime SLA</div>
+                        <p class="spec-value">99.9%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 3rem;">
+                <h3>System Architecture</h3>
+                <div style="display: grid; gap: 1.5rem; margin-top: 1.5rem;">
+                    <div style="padding: 1.5rem; background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); display: flex; gap: 1rem;">
+                        <div style="width: 48px; height: 48px; background-color: rgba(0, 102, 255, 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--primary); font-weight: bold;">1</div>
+                        <div>
+                            <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Quantum Processing Unit</h4>
+                            <p style="font-size: 0.875rem;">The core quantum processor with superconducting qubits operating at cryogenic temperatures. Includes active cooling and electromagnetic shielding for optimal performance.</p>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem; background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); display: flex; gap: 1rem;">
+                        <div style="width: 48px; height: 48px; background-color: rgba(0, 102, 255, 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--primary); font-weight: bold;">2</div>
+                        <div>
+                            <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Control Electronics</h4>
+                            <p style="font-size: 0.875rem;">Precision microwave control systems that orchestrate qubit operations with nanosecond timing. Includes real-time feedback and error detection.</p>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem; background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); display: flex; gap: 1rem;">
+                        <div style="width: 48px; height: 48px; background-color: rgba(0, 102, 255, 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--primary); font-weight: bold;">3</div>
+                        <div>
+                            <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Quantum Compiler</h4>
+                            <p style="font-size: 0.875rem;">Optimized compiler that translates high-level quantum algorithms into native gate sequences. Includes circuit optimization and error mitigation strategies.</p>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem; background-color: var(--card); border: 1px solid var(--border); border-radius: var(--radius); display: flex; gap: 1rem;">
+                        <div style="width: 48px; height: 48px; background-color: rgba(0, 102, 255, 0.2); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--primary); font-weight: bold;">4</div>
+                        <div>
+                            <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Cloud API</h4>
+                            <p style="font-size: 0.875rem;">RESTful API for job submission, monitoring, and result retrieval. Supports multiple programming languages and quantum frameworks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="roadmap">
+        <div class="container max-w-5xl">
+            <div class="section-title">
+                <h2>Development Timeline</h2>
+                <div class="title-underline"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">Q1</div>
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Q1 2026</div>
+                        <h3>Foundation Launch</h3>
+                        <ul>
+                            <li>100-qubit quantum processor</li>
+                            <li>Cloud API v1.0</li>
+                            <li>Basic error correction</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">Q2</div>
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Q2 2026</div>
+                        <h3>Scaling Phase</h3>
+                        <ul>
+                            <li>200-qubit processor variant</li>
+                            <li>Advanced circuit optimization</li>
+                            <li>Enterprise support tier</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">Q3</div>
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Q3 2026</div>
+                        <h3>Current</h3>
+                        <ul>
+                            <li>500-qubit system development</li>
+                            <li>Fault-tolerant architecture</li>
+                            <li>Multi-processor federation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">Q4</div>
+                    <div class="timeline-content">
+                        <div class="timeline-phase">Q4 2026</div>
+                        <h3>Next Generation</h3>
+                        <ul>
+                            <li>1000-qubit processor</li>
+                            <li>Full error correction</li>
+                            <li>Quantum networking protocol</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-dot">27</div>
+                    <div class="timeline-content">
+                        <div class="timeline-phase">2027</div>
+                        <h3>Future Vision</h3>
+                        <ul>
+                            <li>Utility-scale quantum computer</li>
+                            <li>Industry-specific solutions</li>
+                            <li>Global quantum internet backbone</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container max-w-5xl">
+            <div class="section-title">
+                <h2>Get in Touch</h2>
+                <div class="title-underline"></div>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:contact@hyperionq.com">contact@hyperionq.com</a></p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>Phone</h3>
+                    <p><a href="tel:+1-555-0123">+1 (555) 0123</a></p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>San Francisco, CA<br>United States</p>
+                </div>
+            </div>
+
+            <div style="max-width: 32rem;">
+                <h3 style="margin-bottom: 1.5rem;">Send us a Message</h3>
+                <form id="contactForm" onsubmit="handleFormSubmit(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message →</button>
+                </form>
+                <p style="font-size: 0.875rem; color: #666666; margin-top: 1.5rem;">We typically respond within 24 hours. For urgent matters, please call us directly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section 2 -->
+    <section class="cta-section">
+        <div class="container max-w-5xl mx-auto">
+            <h2>Join Us on This Journey</h2>
+            <p>Be part of the quantum revolution. Partner with Hyperion to explore the possibilities of quantum computing for your organization.</p>
+            <a href="#contact" class="btn-primary">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container max-w-5xl">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#technology">Technology</a></li>
+                        <li><a href="#roadmap">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Hyperion Quantum Systems. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function toggleMenu() {
+            // Mobile menu toggle functionality
+            console.log('Menu toggled');
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (!name || !email || !message) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Simulate form submission
+            alert('Message sent! We\'ll get back to you soon.');
+            form.reset();
+        }
+
+        // Add fade-in animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(10px)';
+            element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
